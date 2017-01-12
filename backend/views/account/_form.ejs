@@ -1,0 +1,207 @@
+<br>
+<!-- end row -->
+<div class="row">
+    <!-- begin col-12 -->
+    <div class="col-md-12">
+        <!-- begin panel -->
+        <div id="account-panel" class="panel panel-inverse">
+            <div class="panel-heading">
+                <div class="panel-heading-btn">
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                </div>
+                <h4 class="panel-title"><%= translate('account', 'title') %></h4>
+            </div>
+            <div class="panel-body">
+                <form enctype="multipart/form-data"
+                      style="position:relative"
+                      class="form-horizontal form-bordered"
+                      id="account-form"
+                      action="/account<%= account.isNewRecord ? '' : '/' + account.act_id %>"
+                      method="post"><%
+if (!account.isNewRecord) { %>
+                    <input type="hidden" ng-init="Account.act_id = <%= account.act_id %>"><%
+} %>
+                    <div id="errorMessages" class="hidden">
+                        <div class="alert alert-danger">
+                            <ul></ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4"
+                                       for="Account_act_login">
+                                    <%= translate('account', 'act_login') %>
+                                </label>
+                                <div class="col-md-6 col-sm-6">
+                                    <input class="form-control"
+                                           id="Account_act_login"
+                                           name="Account[act_login]"
+                                           ng-model="Account.act_login"
+                                           type="text"
+                                           value="<%= account.act_login %>" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4"
+                                       for="Account_act_password">
+                                    <%= translate('account', 'act_password') %>
+                                    <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6">
+                                    <input class="form-control"
+                                           id="Account_act_password"
+                                           name="Account[act_password]"
+                                           ng-model="Account.act_password"
+                                           type="password"<%
+                                if (account.isNewRecord) { %>
+                                           required="required"<%
+                                } %>/>
+                                    <div id="passwordStrengthDiv"
+                                         class="is0 m-t-5">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4"
+                                       for="Account_act_email">
+                                    <%= translate('account', 'act_email') %>
+                                </label>
+                                <div class="col-md-6 col-sm-6">
+                                    <input class="form-control"
+                                           id="Account_act_email"
+                                           name="Account[act_email]"
+                                           ng-model="Account.act_email"
+                                           type="text"
+                                           value="<%= account.act_email %>" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4"
+                                       for="Account_act_role">
+                                    <%= translate('account', 'act_role') %>
+                                </label>
+                                <div class="col-md-6 col-sm-6">
+                                    <input class="form-control"
+                                           id="Account_act_role"
+                                           name="Account[act_role]"
+                                           ng-model="Account.act_role"
+                                           type="text"
+                                           value="<%= account.act_role %>" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4"
+                                       for="Account_act_status">
+                                    <%= translate('account', 'act_status') %>
+                                </label>
+                                <div class="col-md-6 col-sm-6">
+                                    <select class="form-control default-select2"
+                                            id="Account_act_status"
+                                            name="Account[act_status]"
+                                            ng-model="Account.act_status">
+                                        <option value=""></option>
+                                        <option value="waiting"
+                                                <% if (account.act_status == "waiting") { %>
+                                                selected="selected"<%
+                                                } %>>
+                                            <%= translate('account', "waiting") %>
+                                        </option>
+                                        <option value="active"
+                                                <% if (account.act_status == "active") { %>
+                                                selected="selected"<%
+                                                } %>>
+                                            <%= translate('account', "active") %>
+                                        </option>
+                                        <option value="lock"
+                                                <% if (account.act_status == "lock") { %>
+                                                selected="selected"<%
+                                                } %>>
+                                            <%= translate('account', "lock") %>
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 col-md-2 col-sm-offset-4 col-md-offset-5">
+                            <button class="btn btn-primary" ng-click="save()" type="button" style="width: 100%">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- end panel -->
+    </div>
+    <!-- end col-12 -->
+</div>
+<!-- end row -->
+<script>
+    function initPage($scope) {
+        // Loading associated models 
+        $('#Account_act_status').select2({
+            placeholder: "Select a <%= translate('account', 'act_status') %>"
+        });<%
+        if (account.act_status) { %>
+        $scope.Account.act_status = <%- JSON.stringify(account.act_status) %>;<%
+        } %>
+
+        $scope.save = function() {
+            if (!$('#account-form').valid()) {
+                return alert("Error when validating the form, please check.");
+            }
+            var target = $('#account-panel').closest('.panel');
+            if (!$(target).hasClass('panel-loading')) {
+                var targetBody = $(target).find('.panel-body');
+                var spinnerHtml = '<div class="panel-loader"><span class="spinner-small"></span><p><%= translate("system", "Saving") %><span></span></p></div>';
+                $(target).addClass('panel-loading');
+                $(targetBody).prepend(spinnerHtml);
+
+                setTimeout(function () {
+                    var model = {};
+                    for (var i in $scope["Account"]) {
+                        if ($scope["Account"].hasOwnProperty(i)) {
+                            model[i] = $scope["Account"][i];
+                        }
+                    }
+
+                    $.post('/api/account', model, function (result) {
+                        $(target).removeClass('panel-loading');
+                        $(target).find('.panel-loader').remove();
+                        if (result.code != 0) {
+                            return setErrorMessages(result.errors);
+                        }
+
+                        // Redirect on listing, comment if not necessary
+                        window.location.href = "/account";
+
+                        // If you don't redirect, loading data in model scope
+                        setErrorMessages();
+                        Object.keys(result["Account"]).forEach(function (key) {
+                            if (result["Account"].hasOwnProperty(key)) {
+                                $scope["Account"][key] = result["Account"][key];
+                            }
+                        });
+                    });
+                }, 300);
+            }
+        }
+
+        // Other functions 
+    }
+
+    function setErrorMessages(errors) {
+        if (!errors || errors.length == 0) {
+            return $('#errorMessages').addClass('hidden');
+        }
+        var messages = '';
+        errors.forEach(function (error) {
+            messages += '<li>' + error.message + '</li>';
+        });
+        return $($('#errorMessages')
+                .removeClass('hidden')
+                .find('ul')[0])
+                .html(messages);
+    }
+</script>

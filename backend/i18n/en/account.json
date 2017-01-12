@@ -1,0 +1,17 @@
+{
+  "title": "Account",
+  "act_id": "Act",
+  "act_login": "Act Login",
+  "act_password": "Act Password",
+  "act_email": "Act Email",
+  "act_logo": "Act Logo",
+  "act_city": "Act City",
+  "act_zipcode": "Act Zipcode",
+  "act_role": "Role",
+  "act_insert": "Act Insert",
+  "act_update": "Act Update",
+  "act_status": "Act Status",
+  "waiting": "Waiting",
+  "active": "Active",
+  "lock": "Lock"
+}

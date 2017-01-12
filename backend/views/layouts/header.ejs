@@ -1,0 +1,138 @@
+<!DOCTYPE html><%
+var menu_items = [{
+    label: translate('system_menu', 'address'),
+    url: '/address',
+    icon: 'fa-cube',
+    active: __controller == 'address'
+}, {
+    label: translate('system_menu', 'account'),
+    url: '/account',
+    icon: 'fa-cube',
+    active: __controller == 'account'
+}, {
+    label: translate('system_menu', 'country'),
+    url: '/country',
+    icon: 'fa-cube',
+    active: __controller == 'country'
+}].sort(function (a, b) {
+    if (a.label == b.label) return 0;
+    return a.label > b.label ? 1 : -1;
+});
+%>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Demo</title>
+
+    <meta name="description" content="overview &amp; stats"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!--basic styles-->
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico"/>
+
+    <!-- ================== BEGIN BASE CSS STYLE ================== -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+    <link href="/theme/plugins/jquery-ui/themes/base/minified/jquery-ui.min.css" rel="stylesheet">
+    <link href="/theme/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/theme/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/theme/plugins/DataTables/css/data-table.css" rel="stylesheet">
+    <link href="/theme/plugins/ionRangeSlider/css/ion.rangeSlider.css" rel="stylesheet">
+    <link href="/theme/plugins/ionRangeSlider/css/ion.rangeSlider.skinNice.css" rel="stylesheet">
+    <link href="/theme/plugins/select2/dist/css/select2.min.css" rel="stylesheet">
+    <link href="/theme/plugins/password-indicator/css/password-indicator.css" rel="stylesheet">
+    <link href="/theme/plugins/bootstrap-wizard/css/bwizard.min.css" rel="stylesheet">
+    <link href="/theme/plugins/parsley/src/parsley.css" rel="stylesheet">
+    <link href="/theme/plugins/switchery/switchery.min.css" rel="stylesheet">
+    <link href="/theme/css/animate.min.css" rel="stylesheet">
+    <link href="/theme/css/style.min.css" rel="stylesheet">
+    <link href="/theme/css/style-responsive.min.css" rel="stylesheet">
+    <link href="/theme/css/theme/default.css" rel="stylesheet">
+    <link href="/theme/css/style.css" rel="stylesheet">
+    <link href="/theme/plugins/jquery-file-upload/blueimp-gallery/blueimp-gallery.min.css" rel="stylesheet">
+    <link href="/theme/plugins/jquery-file-upload/css/jquery.fileupload.css" rel="stylesheet">
+    <link href="/theme/plugins/jquery-file-upload/css/jquery.fileupload-ui.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/plugins/jquery.datetimepicker/jquery.datetimepicker.css"/>
+    <!-- ================== END BASE CSS STYLE ================== -->
+
+    <link href="/css/style.css" rel="stylesheet"/>
+</head>
+
+<body>
+<!-- begin #page-loader -->
+<div id="page-loader" class="fade in"><span class="spinner"></span></div>
+<!-- end #page-loader -->
+
+<!-- begin #page-container -->
+<div id="page-container" class="fade page-sidebar-fixed page-header-fixed">
+    <!-- begin #header -->
+    <div id="header" class="header navbar navbar-default navbar-fixed-top">
+        <!-- begin container-fluid -->
+        <div class="container-fluid row">
+            <div class="navbar-header col-xs-12">
+                <!-- begin mobile sidebar expand / collapse button -->
+                <button type="button" class="navbar-toggle" data-click="sidebar-toggled">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!-- end mobile sidebar expand / collapse button -->
+                <a href="/" class="navbar-brand"><span class="navbar-logo hidden-xs"></span> Demo</a>
+                <div style="float: right">
+                    <!-- begin header navigation right -->
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown navbar-user">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                                <span><%= S(__account.act_email).capitalize() %></span> <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu animated fadeInLeft">
+                                <li class="arrow"></li>
+                                <li><a href="/account/<%= __account.act_id %>">Edit Profile</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/logout">Log Out</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- end header navigation right -->
+                </div>
+            </div>
+
+        </div>
+        <!-- end container-fluid -->
+    </div>
+    <!-- end #header -->
+
+    <!-- begin #sidebar -->
+    <div id="sidebar" class="sidebar">
+        <!-- begin sidebar scrollbar -->
+        <div data-scrollbar="true" data-height="100%">
+
+            <!-- begin sidebar nav -->
+            <ul class="nav">
+                <li class="nav-header">Navigation</li><%
+menu_items.forEach(function(item) { %>
+                <li class="<% if (item.active) { %>active<% } %>">
+                    <a href="<%= item.url %>">
+                        <i class="fa <%= item.icon %>"></i>
+                        <span><%= item.label %></span>
+                    </a>
+                </li><%
+}); %>
+                <!-- begin sidebar minify button -->
+                <li>
+                    <a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify">
+                        <i class="fa fa-angle-double-left"></i>
+                    </a>
+                </li>
+                <!-- end sidebar minify button -->
+            </ul>
+            <!-- end sidebar nav -->
+        </div>
+        <!-- end sidebar scrollbar -->
+    </div>
+    <div class="sidebar-bg"></div>
+    <!-- end #sidebar -->
+
+    <!-- begin #content -->
+    <div id="content" class="content content-full-width" style="padding: 10px">

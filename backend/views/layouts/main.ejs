@@ -1,0 +1,26 @@
+<%- include('header'); %>
+<div class="breadcrumbs" id="breadcrumbs">
+    <% if (locals.breadcrumbs) { %>
+    <ul class="breadcrumbs breadcrumb">
+        <li>
+            <a href="/">Home</a>
+        </li>
+        <% for (var i = 0; i < breadcrumbs.length; i++) {
+        if (i < breadcrumbs.length - 1) { %>
+        <li>
+            <a href="<%= breadcrumbs[i].url %>"><%= breadcrumbs[i].label %></a>
+        </li>
+        <% } else { %>
+        <li class="active"><%= breadcrumbs[i].label %></li>
+        <% }} %>
+    </ul>
+    <% } %>
+</div>
+<div class="page-content">
+    <div class="row-fluid">
+        <div class="col-xs-12" style="position: relative">
+            <%- include('../' + __view); %>
+        </div>
+    </div>
+</div>
+<%- include('footer'); %>

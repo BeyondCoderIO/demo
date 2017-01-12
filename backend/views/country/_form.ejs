@@ -1,0 +1,200 @@
+<br>
+<!-- end row -->
+<div class="row">
+    <!-- begin col-12 -->
+    <div class="col-md-12">
+        <!-- begin panel -->
+        <div id="country-panel" class="panel panel-inverse">
+            <div class="panel-heading">
+                <div class="panel-heading-btn">
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                </div>
+                <h4 class="panel-title"><%= translate('country', 'title') %></h4>
+            </div>
+            <div class="panel-body">
+                <form enctype="multipart/form-data"
+                      style="position:relative"
+                      class="form-horizontal form-bordered"
+                      id="country-form"
+                      action="/country<%= country.isNewRecord ? '' : '/' + country.cty_id %>"
+                      method="post"><%
+if (!country.isNewRecord) { %>
+                    <input type="hidden" ng-init="Country.cty_id = <%= country.cty_id %>"><%
+} %>
+                    <div id="errorMessages" class="hidden">
+                        <div class="alert alert-danger">
+                            <ul></ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            
+                                                        <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4"
+                                       for="Country_cty_name"
+                                        class="required">
+                                    <%= translate('country', 'cty_name') %>
+                                    <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6">
+                                    <input class="form-control"
+                                           id="Country_cty_name"
+                                           name="Country[cty_name]"
+                                           ng-model="Country.cty_name"
+                                           type="text"
+                                           required="required"
+                                           value="<%= country.cty_name %>" />
+                                </div>
+                            </div>
+                                                        <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4"
+                                       for="Country_cty_iso_code_2"
+                                        class="required">
+                                    <%= translate('country', 'cty_iso_code_2') %>
+                                    <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6">
+                                    <input class="form-control"
+                                           id="Country_cty_iso_code_2"
+                                           name="Country[cty_iso_code_2]"
+                                           ng-model="Country.cty_iso_code_2"
+                                           type="text"
+                                           required="required"
+                                           value="<%= country.cty_iso_code_2 %>" />
+                                </div>
+                            </div>
+                                                        <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4"
+                                       for="Country_cty_iso_code_3"
+                                        class="required">
+                                    <%= translate('country', 'cty_iso_code_3') %>
+                                    <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6">
+                                    <input class="form-control"
+                                           id="Country_cty_iso_code_3"
+                                           name="Country[cty_iso_code_3]"
+                                           ng-model="Country.cty_iso_code_3"
+                                           type="text"
+                                           required="required"
+                                           value="<%= country.cty_iso_code_3 %>" />
+                                </div>
+                            </div>
+                                                        <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4"
+                                       for="Country_cty_status"
+                                        class="required">
+                                    <%= translate('country', 'cty_status') %>
+                                    <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6">
+                                    <select class="form-control default-select2"
+                                            id="Country_cty_status"
+                                            name="Country[cty_status]"
+                                            ng-model="Country.cty_status"
+                                            required="required">
+                                        <option value=""></option>
+                                        <option value="draft"
+                                                <% if (country.cty_status == "draft") { %>
+                                                selected="selected"<%
+                                                } %>>
+                                            <%= translate('country', "draft") %>
+                                        </option>
+                                        <option value="online"
+                                                <% if (country.cty_status == "online") { %>
+                                                selected="selected"<%
+                                                } %>>
+                                            <%= translate('country', "online") %>
+                                        </option>
+                                        <option value="delete"
+                                                <% if (country.cty_status == "delete") { %>
+                                                selected="selected"<%
+                                                } %>>
+                                            <%= translate('country', "delete") %>
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 col-md-2 col-sm-offset-4 col-md-offset-5">
+                            <button class="btn btn-primary" ng-click="save()" type="button" style="width: 100%">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- end panel -->
+    </div>
+    <!-- end col-12 -->
+</div>
+<!-- end row -->
+<script>
+    function initPage($scope) {
+        // Loading associated models 
+        $('#Country_cty_status').select2({
+            placeholder: "Select a <%= translate('country', 'cty_status') %>"
+        });<%
+        if (country.cty_status) { %>
+        $scope.Country.cty_status = <%- JSON.stringify(country.cty_status) %>;<%
+        } %>
+
+        $scope.save = function() {
+            if (!$('#country-form').valid()) {
+                return alert("Error when validating the form, please check.");
+            }
+            var target = $('#country-panel').closest('.panel');
+            if (!$(target).hasClass('panel-loading')) {
+                var targetBody = $(target).find('.panel-body');
+                var spinnerHtml = '<div class="panel-loader"><span class="spinner-small"></span><p><%= translate("system", "Saving") %><span></span></p></div>';
+                $(target).addClass('panel-loading');
+                $(targetBody).prepend(spinnerHtml);
+
+                setTimeout(function () {
+                    var model = {};
+                    for (var i in $scope["Country"]) {
+                        if ($scope["Country"].hasOwnProperty(i)) {
+                            model[i] = $scope["Country"][i];
+                        }
+                    }
+
+                    $.post('/api/country', model, function (result) {
+                        $(target).removeClass('panel-loading');
+                        $(target).find('.panel-loader').remove();
+                        if (result.code != 0) {
+                            return setErrorMessages(result.errors);
+                        }
+
+                        // Redirect on listing, comment if not necessary
+                        window.location.href = "/country";
+
+                        // If you don't redirect, loading data in model scope
+                        setErrorMessages();
+                        Object.keys(result["Country"]).forEach(function (key) {
+                            if (result["Country"].hasOwnProperty(key)) {
+                                $scope["Country"][key] = result["Country"][key];
+                            }
+                        });
+                    });
+                }, 300);
+            }
+        }
+
+        // Other functions 
+    }
+
+    function setErrorMessages(errors) {
+        if (!errors || errors.length == 0) {
+            return $('#errorMessages').addClass('hidden');
+        }
+        var messages = '';
+        errors.forEach(function (error) {
+            messages += '<li>' + error.message + '</li>';
+        });
+        return $($('#errorMessages')
+                .removeClass('hidden')
+                .find('ul')[0])
+                .html(messages);
+    }
+</script>

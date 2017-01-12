@@ -1,0 +1,348 @@
+<br>
+<!-- end row -->
+<div class="row">
+    <!-- begin col-12 -->
+    <div class="col-md-12">
+        <!-- begin panel -->
+        <div id="address-panel" class="panel panel-inverse">
+            <div class="panel-heading">
+                <div class="panel-heading-btn">
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                </div>
+                <h4 class="panel-title"><%= translate('address', 'title') %></h4>
+            </div>
+            <div class="panel-body">
+                <form enctype="multipart/form-data"
+                      style="position:relative"
+                      class="form-horizontal form-bordered"
+                      id="address-form"
+                      action="/address<%= address.isNewRecord ? '' : '/' + address.add_id %>"
+                      method="post"><%
+if (!address.isNewRecord) { %>
+                    <input type="hidden" ng-init="Address.add_id = <%= address.add_id %>"><%
+} %>
+                    <div id="errorMessages" class="hidden">
+                        <div class="alert alert-danger">
+                            <ul></ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            
+                                                        <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4"
+                                       for="Address_add_name"
+                                        class="required">
+                                    <%= translate('address', 'add_name') %>
+                                    <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6">
+                                    <input class="form-control"
+                                           id="Address_add_name"
+                                           name="Address[add_name]"
+                                           ng-model="Address.add_name"
+                                           type="text"
+                                           required="required"
+                                           value="<%= address.add_name %>" />
+                                </div>
+                            </div>
+                                                        <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4"
+                                       for="Address_add_address">
+                                    <%= translate('address', 'add_address') %>
+                                </label>
+                                <div class="col-md-6 col-sm-6">
+                                    <input class="form-control"
+                                           id="Address_add_address"
+                                           name="Address[add_address]"
+                                           ng-model="Address.add_address"
+                                           type="text"
+                                           value="<%= address.add_address %>" />
+                                </div>
+                            </div>
+                                                        <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4"
+                                       for="Address_add_zipcode">
+                                    <%= translate('address', 'add_zipcode') %>
+                                </label>
+                                <div class="col-md-6 col-sm-6">
+                                    <input class="form-control"
+                                           id="Address_add_zipcode"
+                                           name="Address[add_zipcode]"
+                                           ng-model="Address.add_zipcode"
+                                           type="text"
+                                           value="<%= address.add_zipcode %>" />
+                                </div>
+                            </div>
+                                                        <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4"
+                                       for="Address_add_city">
+                                    <%= translate('address', 'add_city') %>
+                                </label>
+                                <div class="col-md-6 col-sm-6">
+                                    <input class="form-control"
+                                           id="Address_add_city"
+                                           name="Address[add_city]"
+                                           ng-model="Address.add_city"
+                                           type="text"
+                                           value="<%= address.add_city %>" />
+                                </div>
+                            </div>
+                                                        <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4"
+                                       for="Address_cty_id">
+                                    <%= translate('address', 'cty_id') %>
+                                </label>
+                                <div class="col-md-6 col-sm-6">
+                                    <select class="form-control"
+                                            id="Address_cty_id"
+                                            name="Address[cty_id]"
+                                            ng-model="Address.cty_id">
+                                    </select>
+                                </div>
+                            </div>
+                                                        <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4"
+                                       for="Address_add_category"
+                                        class="required">
+                                    <%= translate('address', 'add_category') %>
+                                    <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6">
+                                    <select class="form-control default-select2"
+                                            id="Address_add_category"
+                                            name="Address[add_category]"
+                                            ng-model="Address.add_category"
+                                            required="required">
+                                        <option value=""></option>
+                                        <option value="Personal"
+                                                <% if (address.add_category == "Personal") { %>
+                                                selected="selected"<%
+                                                } %>>
+                                            <%= translate('address', "Personal") %>
+                                        </option>
+                                        <option value="Familly"
+                                                <% if (address.add_category == "Familly") { %>
+                                                selected="selected"<%
+                                                } %>>
+                                            <%= translate('address', "Familly") %>
+                                        </option>
+                                        <option value="Job"
+                                                <% if (address.add_category == "Job") { %>
+                                                selected="selected"<%
+                                                } %>>
+                                            <%= translate('address', "Job") %>
+                                        </option>
+                                        <option value="Friend"
+                                                <% if (address.add_category == "Friend") { %>
+                                                selected="selected"<%
+                                                } %>>
+                                            <%= translate('address', "Friend") %>
+                                        </option>
+                                        <option value="Blocked"
+                                                <% if (address.add_category == "Blocked") { %>
+                                                selected="selected"<%
+                                                } %>>
+                                            <%= translate('address', "Blocked") %>
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            
+                            
+                            
+                                                        <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4"
+                                       for="Address_add_status">
+                                    <%= translate('address', 'add_status') %>
+                                </label>
+                                <div class="col-md-6 col-sm-6">
+                                    <select class="form-control default-select2"
+                                            id="Address_add_status"
+                                            name="Address[add_status]"
+                                            ng-model="Address.add_status">
+                                        <option value=""></option>
+                                        <option value="draft"
+                                                <% if (address.add_status == "draft") { %>
+                                                selected="selected"<%
+                                                } %>>
+                                            <%= translate('address', "draft") %>
+                                        </option>
+                                        <option value="online"
+                                                <% if (address.add_status == "online") { %>
+                                                selected="selected"<%
+                                                } %>>
+                                            <%= translate('address', "online") %>
+                                        </option>
+                                        <option value="delete"
+                                                <% if (address.add_status == "delete") { %>
+                                                selected="selected"<%
+                                                } %>>
+                                            <%= translate('address', "delete") %>
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3">
+                            <input type="hidden"
+                                   id="Address_add_latitude"
+                                   name="Address[add_latitude]"
+                                   ng-model="Address.add_latitude"
+                                   value="<%= address.add_latitude ? address.add_latitude : 43.6109200 %>">
+                            <input type="hidden"
+                                   id="Address_add_longitude"
+                                   name="Address[add_longitude]"
+                                   ng-model="Address.add_longitude"
+                                   value="<%= address.add_longitude ? address.add_longitude : 3.8772300 %>">
+                            <div id="googleMap" style="width:500px;height:380px;"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 col-md-2 col-sm-offset-4 col-md-offset-5">
+                            <button class="btn btn-primary" ng-click="save()" type="button" style="width: 100%">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- end panel -->
+    </div>
+    <!-- end col-12 -->
+</div>
+<!-- end row -->
+<script src="http://maps.googleapis.com/maps/api/js"></script>
+<script>
+    function initPage($scope) {
+        // Loading associated models 
+        $('#Address_cty_id').select2({
+            placeholder: "loading, please wait..."
+        });
+        $.get("/api/country", function (results) {
+            var options = "<option></option>";
+            results.forEach(function(result) {
+                options += "<option value=" + result.cty_id + ">" + result.cty_name + "</option>";
+            });
+            var elt = $('#Address_cty_id');
+            if (elt.data('select2')) {
+                elt.select2('destroy');
+            }
+            elt.html(options).select2({
+                placeholder: "Select a <%= translate('address', 'cty_id') %>"
+            });
+
+            <% if (address.cty_id) { %>
+            $scope.Address.cty_id = <%- JSON.stringify(address.cty_id) %>;
+            <% } %>
+        });
+        $('#Address_add_category').select2({
+            placeholder: "Select a <%= translate('address', 'add_category') %>"
+        });<%
+        if (address.add_category) { %>
+        $scope.Address.add_category = <%- JSON.stringify(address.add_category) %>;<%
+        } %>
+        $('#Address_add_status').select2({
+            placeholder: "Select a <%= translate('address', 'add_status') %>"
+        });<%
+        if (address.add_status) { %>
+        $scope.Address.add_status = <%- JSON.stringify(address.add_status) %>;<%
+        } %>
+
+        $scope.save = function() {
+            if (!$('#address-form').valid()) {
+                return alert("Error when validating the form, please check.");
+            }
+            var target = $('#address-panel').closest('.panel');
+            if (!$(target).hasClass('panel-loading')) {
+                var targetBody = $(target).find('.panel-body');
+                var spinnerHtml = '<div class="panel-loader"><span class="spinner-small"></span><p><%= translate("system", "Saving") %><span></span></p></div>';
+                $(target).addClass('panel-loading');
+                $(targetBody).prepend(spinnerHtml);
+
+                setTimeout(function () {
+                    var model = {};
+                    for (var i in $scope["Address"]) {
+                        if ($scope["Address"].hasOwnProperty(i)) {
+                            model[i] = $scope["Address"][i];
+                        }
+                    }
+
+                    $.post('/api/address', model, function (result) {
+                        $(target).removeClass('panel-loading');
+                        $(target).find('.panel-loader').remove();
+                        if (result.code != 0) {
+                            return setErrorMessages(result.errors);
+                        }
+
+                        // Redirect on listing, comment if not necessary
+                        window.location.href = "/address";
+
+                        // If you don't redirect, loading data in model scope
+                        setErrorMessages();
+                        Object.keys(result["Address"]).forEach(function (key) {
+                            if (result["Address"].hasOwnProperty(key)) {
+                                $scope["Address"][key] = result["Address"][key];
+                            }
+                        });
+                    });
+                }, 300);
+            }
+        }
+
+        // Other functions 
+        // Google Map API
+        var map, marker;
+        function initGoogleMap() {
+            var mapProp = {
+                center: {
+                    lat: <%= address.add_latitude ? address.add_latitude : 43.6109200 %>,
+                    lng: <%= address.add_longitude ? address.add_longitude : 3.8772300 %>
+                },
+                zoom: 15,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+            marker = new google.maps.Marker({
+                position: mapProp.center
+            });
+            marker.setMap(map);
+
+            google.maps.event.addListener(map, 'click', function (event) {
+                marker.setPosition(event.latLng);
+                mapProp.center.lat = marker.position.lat();
+                mapProp.center.lng = marker.position.lng();
+                $('#Address_add_latitude').val(mapProp.center.lat).trigger('change');
+                $('#Address_add_longitude').val(mapProp.center.lng).trigger('change');
+            });
+            $('#Address_add_latitude').change(function() {
+                mapProp.center.lat = parseFloat($('#Address_add_latitude').val());
+                marker.setPosition(new google.maps.LatLng(mapProp.center.lat, mapProp.center.lng));
+                map.setCenter(mapProp.center);
+            });
+            $('#Address_add_longitude').change(function() {
+                mapProp.center.lng = parseFloat($('#Address_add_longitude').val());
+                marker.setPosition(new google.maps.LatLng(mapProp.center.lat, mapProp.center.lng));
+                map.setCenter(mapProp.center);
+            });
+        }
+        initGoogleMap();
+
+    }
+
+    function setErrorMessages(errors) {
+        if (!errors || errors.length == 0) {
+            return $('#errorMessages').addClass('hidden');
+        }
+        var messages = '';
+        errors.forEach(function (error) {
+            messages += '<li>' + error.message + '</li>';
+        });
+        return $($('#errorMessages')
+                .removeClass('hidden')
+                .find('ul')[0])
+                .html(messages);
+    }
+</script>

@@ -1,0 +1,23 @@
+{
+  "title": "Address",
+  "add_id": "Add",
+  "add_name": "Add Name",
+  "add_address": "Add Address",
+  "add_zipcode": "Add Zipcode",
+  "add_city": "Add City",
+  "cty_id": "Cty",
+  "add_category": "Add Category",
+  "Personal": "Personal",
+  "Familly": "Familly",
+  "Job": "Job",
+  "Friend": "Friend",
+  "Blocked": "Blocked",
+  "add_latitude": "Add Latitude",
+  "add_longitude": "Add Longitude",
+  "add_insert": "Add Insert",
+  "add_update": "Add Update",
+  "add_status": "Add Status",
+  "draft": "Draft",
+  "online": "Online",
+  "delete": "Delete"
+}

@@ -1,0 +1,202 @@
+<div class="row">
+    <!-- begin col-12 -->
+    <div class="col-md-12">
+        <a class="btn btn-primary" href="/address/new">Create</a>
+        <div class="btn-group">
+        </div>
+    </div>
+    <!-- end col-12 -->
+</div>
+<br>
+<!-- end row -->
+<div class="row">
+    <!-- begin col-12 -->
+    <div class="col-md-12">
+        <!-- begin panel -->
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <div class="panel-heading-btn">
+                </div>
+                <h4 class="panel-title"><%= translate('address', 'title') %></h4>
+            </div>
+            <div class="panel-body">
+                <!-- begin table -->
+                <div class="dataTables_wrapper" id="yw0">
+                    <table class="table-striped table-bordered table-hover dataTable table">
+                        <thead>
+                        <tr><%
+    var sorted = (sort == "add_name" || sort == '-add_name'),
+        asc = sort == "add_name",
+        url = 'address?sort=' + ((sorted && asc) ? '-' : '' ) + "add_name"; %>
+                            <th>
+                                <a class="sort-link" href="<%- url %>">
+                                    <%= translate('address', 'add_name') %>
+                                    <span class="<%= !sorted ? '' : (asc ? 'glyphicon glyphicon-triangle-bottom' : 'glyphicon glyphicon-triangle-top') %>"></span>
+                                </a>
+                            </th><%
+    var sorted = (sort == "cty_id" || sort == '-cty_id'),
+        asc = sort == "cty_id",
+        url = 'address?sort=' + ((sorted && asc) ? '-' : '' ) + "cty_id"; %>
+                            <th>
+                                <a class="sort-link" href="<%- url %>">
+                                    <%= translate('address', 'cty_id') %>
+                                    <span class="<%= !sorted ? '' : (asc ? 'glyphicon glyphicon-triangle-bottom' : 'glyphicon glyphicon-triangle-top') %>"></span>
+                                </a>
+                            </th><%
+    var sorted = (sort == "add_category" || sort == '-add_category'),
+        asc = sort == "add_category",
+        url = 'address?sort=' + ((sorted && asc) ? '-' : '' ) + "add_category"; %>
+                            <th>
+                                <a class="sort-link" href="<%- url %>">
+                                    <%= translate('address', 'add_category') %>
+                                    <span class="<%= !sorted ? '' : (asc ? 'glyphicon glyphicon-triangle-bottom' : 'glyphicon glyphicon-triangle-top') %>"></span>
+                                </a>
+                            </th><%
+    var sorted = (sort == "add_status" || sort == '-add_status'),
+        asc = sort == "add_status",
+        url = 'address?sort=' + ((sorted && asc) ? '-' : '' ) + "add_status"; %>
+                            <th>
+                                <a class="sort-link" href="<%- url %>">
+                                    <%= translate('address', 'add_status') %>
+                                    <span class="<%= !sorted ? '' : (asc ? 'glyphicon glyphicon-triangle-bottom' : 'glyphicon glyphicon-triangle-top') %>"></span>
+                                </a>
+                            </th>
+                            <th id="action">action</th>
+                        </tr>
+                        <tr class="filters">
+                            <td>
+                                <div class="filter-container">
+                                <input class="form-control"  name="q[add_name]" type="text" value="<%= Query.add_name %>">
+                            </div></td>
+                            <td>
+                                <div class="filter-container">
+                                <input class="form-control"  name="q[cty_id]" type="text" value="<%= Query.cty_id %>">
+                            </div></td>
+                            <td>
+                                <div class="filter-container">
+                                    <select class="form-control filter-select2"
+                                            name="q[add_category]"
+                                            id="q_add_category">
+                                        <option value="">All</option>
+                                        <option value="Personal"
+                                                <% if (Query.add_category == "Personal") { %>selected="selected"<% } %>>
+                                            <%= translate('address', 'Personal'); %>
+                                        </option>
+                                        <option value="Familly"
+                                                <% if (Query.add_category == "Familly") { %>selected="selected"<% } %>>
+                                            <%= translate('address', 'Familly'); %>
+                                        </option>
+                                        <option value="Job"
+                                                <% if (Query.add_category == "Job") { %>selected="selected"<% } %>>
+                                            <%= translate('address', 'Job'); %>
+                                        </option>
+                                        <option value="Friend"
+                                                <% if (Query.add_category == "Friend") { %>selected="selected"<% } %>>
+                                            <%= translate('address', 'Friend'); %>
+                                        </option>
+                                        <option value="Blocked"
+                                                <% if (Query.add_category == "Blocked") { %>selected="selected"<% } %>>
+                                            <%= translate('address', 'Blocked'); %>
+                                        </option>
+                                    </select>
+                            </div></td>
+                            <td>
+                                <div class="filter-container">
+                                    <select class="form-control filter-select2"
+                                            name="q[add_status]"
+                                            id="q_add_status">
+                                        <option value="">All</option>
+                                        <option value="draft"
+                                                <% if (Query.add_status == "draft") { %>selected="selected"<% } %>>
+                                            <%= translate('address', 'draft'); %>
+                                        </option>
+                                        <option value="online"
+                                                <% if (Query.add_status == "online") { %>selected="selected"<% } %>>
+                                            <%= translate('address', 'online'); %>
+                                        </option>
+                                        <option value="delete"
+                                                <% if (Query.add_status == "delete") { %>selected="selected"<% } %>>
+                                            <%= translate('address', 'delete'); %>
+                                        </option>
+                                    </select>
+                            </div></td>
+                            <td><div class="filter-container"></div></td>
+                        </tr>
+                        </thead>
+                        <tbody><%
+rows.forEach(function(record) { %>
+                        <tr onclick="editRow(event, '/address/<%= record.add_id %>')" style="cursor: pointer" class="odd">
+                            <td>
+                                <%= record.add_name %>
+                            </td>
+                            <td>
+                                <%= record.Country.cty_name %>
+                            </td>
+                            <td>
+                                <%= record.add_category %>
+                            </td>
+                            <td>
+                                <%= record.add_status %>
+                            </td>
+                            <td class="action-buttons center">
+                                <a class="action-buttons text-danger"
+                                   onclick="rest.delete('/api/address/<%= record.add_id %>')"
+                                   id="yt0">
+                                    <i class="action-buttons fa fa-trash-o fa-lg"></i>
+                                </a>
+                            </td>
+                        </tr><%
+}); %>
+                        </tbody>
+                    </table>
+                    <div class="row-fluid">
+                        <div class="col-xs-6">
+                            <div class="dataTables_info"><%= translate('system', 'Displaying __START__-__END__ of __COUNT__ result.', {
+                                        __START__: count > 0 ? (page - 1) * limit + 1 : 0,
+                                        __END__: page * limit < count ? page * limit : count,
+                                        __COUNT__: count
+                                    }) %></div>
+                        </div>
+                        <div class="col-xs-6"><%
+if (count / limit > 1) { %>
+                            <div class="dataTables_paginate fg-buttonset ui-buttonset fg-buttonset-multi ui-buttonset-multi paging_bootstrap pagination">
+                                <div id="yw1" class="dataTables_paginate paging_simple_numbers">
+                                    <a class="previous
+                                       <% if (page <= 1) { %>disabled<% } %>"
+                                       aria-controls="data-table"
+                                       data-dt-idx="0"
+                                       tabindex="0"
+                                       href="/address?page=<% if (page > 1) { %> <%= page - 1 %> <% } else { %> <%= page %> <% } %> <%= sort ? '&' + sort : '' %>">&lt; Précédent</a><%
+    var p = page <= 5 ? 1 : page - 5;
+    for (var i = 0; i < 10 && p < count / limit + 1; i++, p++) { %>
+                                    <a class="<% if (p == page) { %>current<% } %>"
+                                       aria-controls="data-table"
+                                       data-dt-idx="0"
+                                       tabindex="<%= p %>"
+                                       href="/address?page=<%= p %> <%= sort ? '&' + sort : '' %>"><%= p %></a><%
+    } %>
+                                    <a class="next
+                                       <% if (count / limit <= page) { %>disabled<% } %>"
+                                       aria-controls="data-table"
+                                       data-dt-idx="1"
+                                       tabindex="0"
+                                       href="/address?page=<% if (count / limit > page) { %> <%= page + 1 %> <% } else { %> <%= page %> <% } %> <%= sort ? '&' + sort : '' %>">Suivant &gt;</a>
+                                </div>
+                            </div><%
+} %>
+                        </div>
+                    </div>
+                </div>
+                <div id="loading" style="display: none;"><i class="icon-spinner icon-spin blue bigger-500"></i></div>
+            </div>
+            <!-- end table -->
+        </div>
+    </div>
+    <!-- end panel -->
+</div>
+<!-- end row -->
+<script>
+    function initPage() {
+        $(".default-select2").select2();
+    }
+</script>

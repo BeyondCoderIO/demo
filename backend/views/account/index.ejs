@@ -1,0 +1,177 @@
+<div class="row">
+    <!-- begin col-12 -->
+    <div class="col-md-12">
+        <a class="btn btn-primary" href="/account/new">Create</a>
+        <div class="btn-group">
+        </div>
+    </div>
+    <!-- end col-12 -->
+</div>
+<br>
+<!-- end row -->
+<div class="row">
+    <!-- begin col-12 -->
+    <div class="col-md-12">
+        <!-- begin panel -->
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <div class="panel-heading-btn">
+                </div>
+                <h4 class="panel-title"><%= translate('account', 'title') %></h4>
+            </div>
+            <div class="panel-body">
+                <!-- begin table -->
+                <div class="dataTables_wrapper" id="yw0">
+                    <table class="table-striped table-bordered table-hover dataTable table">
+                        <thead>
+                        <tr><%
+    var sorted = (sort == "act_login" || sort == '-act_login'),
+        asc = sort == "act_login",
+        url = 'account?sort=' + ((sorted && asc) ? '-' : '' ) + "act_login"; %>
+                            <th>
+                                <a class="sort-link" href="<%- url %>">
+                                    <%= translate('account', 'act_login') %>
+                                    <span class="<%= !sorted ? '' : (asc ? 'glyphicon glyphicon-triangle-bottom' : 'glyphicon glyphicon-triangle-top') %>"></span>
+                                </a>
+                            </th><%
+    var sorted = (sort == "act_email" || sort == '-act_email'),
+        asc = sort == "act_email",
+        url = 'account?sort=' + ((sorted && asc) ? '-' : '' ) + "act_email"; %>
+                            <th>
+                                <a class="sort-link" href="<%- url %>">
+                                    <%= translate('account', 'act_email') %>
+                                    <span class="<%= !sorted ? '' : (asc ? 'glyphicon glyphicon-triangle-bottom' : 'glyphicon glyphicon-triangle-top') %>"></span>
+                                </a>
+                            </th><%
+    var sorted = (sort == "act_role" || sort == '-act_role'),
+        asc = sort == "act_role",
+        url = 'account?sort=' + ((sorted && asc) ? '-' : '' ) + "act_role"; %>
+                            <th>
+                                <a class="sort-link" href="<%- url %>">
+                                    <%= translate('account', 'act_role') %>
+                                    <span class="<%= !sorted ? '' : (asc ? 'glyphicon glyphicon-triangle-bottom' : 'glyphicon glyphicon-triangle-top') %>"></span>
+                                </a>
+                            </th><%
+    var sorted = (sort == "act_status" || sort == '-act_status'),
+        asc = sort == "act_status",
+        url = 'account?sort=' + ((sorted && asc) ? '-' : '' ) + "act_status"; %>
+                            <th>
+                                <a class="sort-link" href="<%- url %>">
+                                    <%= translate('account', 'act_status') %>
+                                    <span class="<%= !sorted ? '' : (asc ? 'glyphicon glyphicon-triangle-bottom' : 'glyphicon glyphicon-triangle-top') %>"></span>
+                                </a>
+                            </th>
+                            <th id="action">action</th>
+                        </tr>
+                        <tr class="filters">
+                            <td>
+                                <div class="filter-container">
+                                <input class="form-control"  name="q[act_login]" type="text" value="<%= Query.act_login %>">
+                            </div></td>
+                            <td>
+                                <div class="filter-container">
+                                <input class="form-control"  name="q[act_email]" type="text" value="<%= Query.act_email %>">
+                            </div></td>
+                            <td>
+                                <div class="filter-container">
+                            </div></td>
+                            <td>
+                                <div class="filter-container">
+                                    <select class="form-control filter-select2"
+                                            name="q[act_status]"
+                                            id="q_act_status">
+                                        <option value="">All</option>
+                                        <option value="waiting"
+                                                <% if (Query.act_status == "waiting") { %>selected="selected"<% } %>>
+                                            <%= translate('account', 'waiting'); %>
+                                        </option>
+                                        <option value="active"
+                                                <% if (Query.act_status == "active") { %>selected="selected"<% } %>>
+                                            <%= translate('account', 'active'); %>
+                                        </option>
+                                        <option value="lock"
+                                                <% if (Query.act_status == "lock") { %>selected="selected"<% } %>>
+                                            <%= translate('account', 'lock'); %>
+                                        </option>
+                                    </select>
+                            </div></td>
+                            <td><div class="filter-container"></div></td>
+                        </tr>
+                        </thead>
+                        <tbody><%
+rows.forEach(function(record) { %>
+                        <tr onclick="editRow(event, '/account/<%= record.act_id %>')" style="cursor: pointer" class="odd">
+                            <td>
+                                <%= record.act_login %>
+                            </td>
+                            <td>
+                                <%= record.act_email %>
+                            </td>
+                            <td>
+                                <%= record.act_role %>
+                            </td>
+                            <td>
+                                <%= record.act_status %>
+                            </td>
+                            <td class="action-buttons center">
+                                <a class="action-buttons text-danger"
+                                   onclick="rest.delete('/api/account/<%= record.act_id %>')"
+                                   id="yt0">
+                                    <i class="action-buttons fa fa-trash-o fa-lg"></i>
+                                </a>
+                            </td>
+                        </tr><%
+}); %>
+                        </tbody>
+                    </table>
+                    <div class="row-fluid">
+                        <div class="col-xs-6">
+                            <div class="dataTables_info"><%= translate('system', 'Displaying __START__-__END__ of __COUNT__ result.', {
+                                        __START__: count > 0 ? (page - 1) * limit + 1 : 0,
+                                        __END__: page * limit < count ? page * limit : count,
+                                        __COUNT__: count
+                                    }) %></div>
+                        </div>
+                        <div class="col-xs-6"><%
+if (count / limit > 1) { %>
+                            <div class="dataTables_paginate fg-buttonset ui-buttonset fg-buttonset-multi ui-buttonset-multi paging_bootstrap pagination">
+                                <div id="yw1" class="dataTables_paginate paging_simple_numbers">
+                                    <a class="previous
+                                       <% if (page <= 1) { %>disabled<% } %>"
+                                       aria-controls="data-table"
+                                       data-dt-idx="0"
+                                       tabindex="0"
+                                       href="/account?page=<% if (page > 1) { %> <%= page - 1 %> <% } else { %> <%= page %> <% } %> <%= sort ? '&' + sort : '' %>">&lt; Précédent</a><%
+    var p = page <= 5 ? 1 : page - 5;
+    for (var i = 0; i < 10 && p < count / limit + 1; i++, p++) { %>
+                                    <a class="<% if (p == page) { %>current<% } %>"
+                                       aria-controls="data-table"
+                                       data-dt-idx="0"
+                                       tabindex="<%= p %>"
+                                       href="/account?page=<%= p %> <%= sort ? '&' + sort : '' %>"><%= p %></a><%
+    } %>
+                                    <a class="next
+                                       <% if (count / limit <= page) { %>disabled<% } %>"
+                                       aria-controls="data-table"
+                                       data-dt-idx="1"
+                                       tabindex="0"
+                                       href="/account?page=<% if (count / limit > page) { %> <%= page + 1 %> <% } else { %> <%= page %> <% } %> <%= sort ? '&' + sort : '' %>">Suivant &gt;</a>
+                                </div>
+                            </div><%
+} %>
+                        </div>
+                    </div>
+                </div>
+                <div id="loading" style="display: none;"><i class="icon-spinner icon-spin blue bigger-500"></i></div>
+            </div>
+            <!-- end table -->
+        </div>
+    </div>
+    <!-- end panel -->
+</div>
+<!-- end row -->
+<script>
+    function initPage() {
+        $(".default-select2").select2();
+    }
+</script>

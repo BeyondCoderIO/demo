@@ -1,0 +1,11 @@
+{
+  "title": "Country",
+  "cty_id": "Cty",
+  "cty_name": "Cty Name",
+  "cty_iso_code_2": "Cty Iso Code 2",
+  "cty_iso_code_3": "Cty Iso Code 3",
+  "cty_status": "Cty Status",
+  "draft": "Draft",
+  "online": "Online",
+  "delete": "Delete"
+}
