@@ -59,13 +59,20 @@ Requirements
 ------------
 1. node.js
 2. npm
-4. (optional) forever (if not installed, use the command: npm install -g forever)
+3. A running MySQL (or SQL) database server.
+4. (optional) forever (if not installed, use the command: npm install -g forever).
 
 
 Installation
 ------------
-1. Use the command: npm install
-2. To start your server, use the command (if you use forever): forever start server
+1. Use the command: "npm install" on your terminal console inside your root project.
+2. Install the SQL Script into your database server (see api/data/mysql-data.sql).
+3. Update the config file to access your database (see api/config/main.js)
+4. To start your server, use the command line:
+   - with "node"   : node server.js port=8000
+   - with "forever": forever start server.js port=8000
+5. Launch your browser and to to URL: http://localhost:8000
+6. Enjoy !!!!
 
 
 Tutorial - module Permissions
